@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="/static/logo/reu.png" rel="shortcut icon">
+    <link rel="stylesheet" href="/static/styles/style.css">
+    <title>Форма редактирования пользователя</title>
+</head>
+<body style="background-image: url(/static/img/backgroundl.jpg)">
+<header>
+    <a href="/admin" class="underline-one">Администратор</a>
+    <a href="/admin/users" class="underline-one">Пользователи</a>
+</header>
+<h1>Форма редактирования пользователя</h1>
+<form th:method="POST" th:action="@{/admin/users/edit/{id}(id=${userForm.getId()})}" th:object="${userForm}" enctype="multipart/form-data">
+    <p><label for="surn">Фамилия: </label></p>
+    <input type="text" th:field="*{surname}" id="surn">
+    <div class="incorrectFieldForm" style="color: red; background: white" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></div>
+
+    <p><label for="nam">Имя: </label></p>
+    <input type="text" th:field="*{name}" id="nam">
+    <div class="incorrectFieldForm" style="color: red; background: white" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+
+    <p><label for="patron">Отчество: </label></p>
+    <input type="text" th:field="*{patronymic}" id="patron">
+    <div style="color: red" th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></div>
+
+    <p><label for="login">Логин: </label></p>
+    <input type="text" th:field="*{login}" id="login">
+    <div style="color: red" th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></div>
+
+    <p><label for="password" hidden>Пароль: </label></p>
+    <input type="hidden" th:field="*{password}" id="password">
+
+    <p><label for="years">Возраст: </label></p>
+    <!--Проверка поля на стороне фронтенда отключена:
+    <input type="number" min="0" max="123" th:field="*{age}" id="years">-->
+    <input type="number" th:field="*{age}" id="years" required>
+    <div class="incorrectFieldForm" style="color: red; background: white" th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></div>
+
+    <p><label for="mail">E-mail: </label></p>
+    <!--Проверка поля на стороне фронтенда отключена:
+    <input type="email" th:field="*{email}" id="mail">-->
+    <input type="text" th:field="*{email}" id="mail">
+    <div class="incorrectFieldForm" style="color: red; background: white" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+
+    <p><label for="tel">Адрес: </label></p>
+    <input type="text" th:field="*{address}" id="address">
+    <div class="incorrectFieldForm" style="color: red; background: white" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></div>
+
+    <p><label for="tel">Телефон: </label></p>
+    <input type="text" th:field="*{phone}" id="tel">
+    <div class="incorrectFieldForm" style="color: red; background: white" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></div>
+
+    <p><label for="productList" hidden>Продукты: </label></p>
+    <input type="hidden" th:field="*{productList}" id="productList">
+
+    <p><label for="orderList" hidden>Заказы: </label></p>
+    <input type="hidden" th:field="*{orderList}" id="orderList">
+
+    <p><label for="selectGoodProvider">Роль: </label></p>
+    <select id="selectGoodProvider" th:field="*{role}" required>
+        <option th:each="enum : ${T(com.example.project.enumm.Roles).values()}"
+                th:text="${enum.getDisplayValue()}"
+                th:value = "${enum}" >
+        </option>
+    </select>
+
+
+    <p><input type="file" name="file" id="file"></p>
+
+    <hr class="hr-vertical-gradient">
+    <p></p>
+    <div class="incorrectFieldForm" style="color: red; font-size: 25px; text-align: center" th:text="${error}"></div>
+    <!--  <div th:if="${#fields.hasErrors('global')}">-->
+    <!--    <small th:each="err: ${#fields.errors('global')}" th:text="${err}" style="color:red"></small>-->
+    <!--  </div>-->
+    <div class="keysblock">
+    <input type="submit" value="Сохранить" class="key">
+    <a href="/admin/users" class="link">Отмена</a>
+    </div>
+    <p></p>
+</form>
+</body>
+</html>
